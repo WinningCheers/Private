@@ -1,0 +1,60 @@
+Create Procedure SplitCommaSaparetedValues(@User_TypeId numeric(18)	
+,@LCO_Dist_Ids nvarchar(max)	
+,@Dist_Ids nvarchar(max)		
+,@NoOfConnections_SDs nvarchar(max)
+,@NoOfConnections_HDs nvarchar(max)
+,@Others nvarchar(max)
+,@DiscountAmounts nvarchar(max)
+,@UserId numeric(18)
+,@Ret_Flag nvarchar(2) output
+,@Ret_Msg nvarchar(200) output
+)
+)
+as
+Begin
+Declare @tem table(srno int identity(1,1),LCO_Dist_Id numeric(18),Dist_id numeric(18),SD_Conn numeric(18),HD_Conn numeric(18),Other_Conn numeric(18),Discnt money)
+		
+		declare @a int,@b int,@c int,@d int,@e int,@f int
+		
+	WHILE(len(@LCO_Dist_Ids)>0 )
+	begin
+		if(CHARINDEX(',',@LCO_Dist_Ids,1)<>0 )
+			begin
+			--print 'in 1'
+			set @a=convert(int,substring(@LCO_Dist_Ids,1,CHARINDEX(',',@LCO_Dist_Ids,1)-1))
+			set @b=convert(int,substring(@Dist_Ids,1,CHARINDEX(',',@Dist_Ids,1)-1))
+			set @c=convert(int,substring(@NoOfConnections_SDs,1,CHARINDEX(',',@NoOfConnections_SDs,1)-1))
+			set @d=convert(int,substring(@NoOfConnections_HDs,1,CHARINDEX(',',@NoOfConnections_HDs,1)-1))
+			set @e=convert(int,substring(@Others,1,CHARINDEX(',',@Others,1)-1))
+			set @f=convert(int,substring(@DiscountAmounts,1,CHARINDEX(',',@DiscountAmounts,1)-1))
+	
+			set @LCO_Dist_Ids=substring(@LCO_Dist_Ids,CHARINDEX(',',@LCO_Dist_Ids,1)+1,len(@LCO_Dist_Ids))
+			set @Dist_Ids=substring(@Dist_Ids,CHARINDEX(',',@Dist_Ids,1)+1,len(@Dist_Ids))
+			set @NoOfConnections_SDs=substring(@NoOfConnections_SDs,CHARINDEX(',',@NoOfConnections_SDs,1)+1,len(@NoOfConnections_SDs))
+			set @NoOfConnections_HDs=substring(@NoOfConnections_HDs,CHARINDEX(',',@NoOfConnections_HDs,1)+1,len(@NoOfConnections_HDs))
+			set @Others=substring(@Others,CHARINDEX(',',@Others,1)+1,len(@Others))
+			set @DiscountAmounts=substring(@DiscountAmounts,CHARINDEX(',',@DiscountAmounts,1)+1,len(@DiscountAmounts))
+	
+			end
+		else 
+			begin
+			--print 'in 2'
+			set @a=convert(numeric(18),@LCO_Dist_Ids)
+			set @b=convert(numeric(18),@Dist_Ids)
+			set @c=convert(numeric(18),@NoOfConnections_SDs)
+			set @d=convert(numeric(18),@NoOfConnections_HDs)
+			set @e=convert(numeric(18),@Others)
+			set @f=convert(numeric(18),@DiscountAmounts)
+	
+			set @LCO_Dist_Ids=''
+			set @Dist_Ids=''
+			set @NoOfConnections_SDs=''
+			set @NoOfConnections_HDs=''
+			set @Others=''
+			set @DiscountAmounts=''				
+	
+			end
+	--	print @ne1
+		insert into @tem (LCO_Dist_Id,Dist_id,SD_Conn,HD_Conn,Other_Conn,Discnt) values (@a,@b,@c,@d,@e,@f )
+	
+		end
