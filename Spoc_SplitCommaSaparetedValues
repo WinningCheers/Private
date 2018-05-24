@@ -1,3 +1,4 @@
+--Split string with having Comma(,) ---
 Create Procedure SplitCommaSaparetedValues(@User_TypeId numeric(18)	
 ,@LCO_Dist_Ids nvarchar(max)	
 ,@Dist_Ids nvarchar(max)		
