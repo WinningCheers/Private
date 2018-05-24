@@ -1,0 +1,204 @@
+USE [SRN_STN_DB_KL]
+GO
+/****** Object:  StoredProcedure [dbo].[DB_SRNJourneyAutomail]    Script Date: 5/24/2018 2:46:18 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[DB_Automail]
+AS
+BEGIN
+	 Declare @html nvarchar(max),@html1 nvarchar(max)
+ set @html=CAST(( SELECT  [Coloumn1] AS 'td',''
+      ,[Coloumn2] AS 'td','',
+      Coloumn3 AS 'td','',
+Coloumn4 AS 'td','',
+Coloumn5 AS 'td','',
+Coloumn6 AS 'td','',
+Coloumn7 AS 'td','',
+Coloumn8 AS 'td','',
+Coloumn9 AS 'td','',
+Coloumn10 AS 'td','',
+Coloumn11 AS 'td','',
+Coloumn12 AS 'td','',
+Coloumn13 AS 'td','',
+Coloumn14 AS 'td','',
+Coloumn15 AS 'td','',
+Coloumn16 AS 'td','',
+Coloumn17 AS 'td','',
+Coloumn18 AS 'td','',
+Coloumn19 AS 'td','',
+Coloumn20 AS 'td','',
+Coloumn21 AS 'td','',
+Coloumn22 AS 'td','',
+Coloumn23 AS 'td','',
+Coloumn24 AS 'td','',
+Coloumn25 AS 'td','',
+Coloumn26 AS 'td','',
+Coloumn27 AS 'td','',
+Coloumn28 AS 'td',''
+	   
+
+		 FROM   [Database].[dbo].[Table]
+FOR XML PATH('tr'), ELEMENTS ) AS NVARCHAR(MAX))
+set @html=replace(@html,'<tr><td>','<tr><td Align="Center" bgcolor="#008cba"  style="color:white">')
+
+Declare @Sub nvarchar(max),@head nvarchar(max),@body nvarchar(max)
+set @Sub='Jorney Report '+ Convert(nvarchar(10),getdate(),103)+' ' + Convert(nvarchar(10),getdate(),108) 
+
+set @head= '<head>
+<style>
+#customers,#customers_g {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+	text-align: center;
+}
+
+#customers td, #customers th,#customers_g th {
+    border: 1px solid #ddd;
+    padding: 1px;
+	text-align: center;
+	
+}
+
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: #008cba;
+    color: white;
+}
+#customers_g tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers_g tr:hover {background-color: #ddd;}
+#customers_g th {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: #008000;
+    color: white;
+}
+td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 1px;
+}
+#cust {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#cust td, #customers,#customers_g th {
+    border: 1px solid #ddd;
+    padding: 1px;
+	text-align: center;
+	
+}
+
+
+#cust tr:nth-child(even){background-color: #f2f2f2;}
+
+#cust tr:hover {background-color: #ddd;}
+
+#cust th {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: #f70419;
+    color: white;
+}
+
+caption {
+    
+	color:#ba8300;
+	font: italic bold 12px/30px Georgia, serif;
+	font-size: 200%;
+}
+</style>
+</head>'
+
+SET @body ='<html>'+@head+'<body><div> 
+<table rules="all" id="customers" cellspacing="10px"><caption>'+@Sub+
+'</caption> 
+<tr>
+<th bgcolor="#008cba" style="color:white"> Coloumn1 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn2 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn3 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn4 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn5 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn6 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn7 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn8 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn9 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn10 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn11 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn12 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn13 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn14 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn15 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn16 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn17 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn18 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn19 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn20 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn21 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn22 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn23 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn24 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn25 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn26 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn27 </th>
+<th bgcolor="#008cba" style="color:white"> Coloumn28 </th>
+</tr>' 
+
+SET @body =isnull(@body,'') + isnull(@html,'')+'</table></div><br/><br/>'+'
+
+<b>Regards</b><br/><br/><b><a href = "mailto:support@abc.com">Mail to Support</a><br/>
+<div>
+  <a target="_blank" href="URL">
+    <img src="image.png" alt="Gits" width="100" height="70"/>
+  </a>
+  <a target="_blank" href="URL">
+    <img src="image.png" alt="Idea" width="100" height="70">
+  </a></div>
+</body></html>'	
+
+
+declare @qry varchar(8000)
+Select @qry='SET NOCOUNT ON;SELECT [Coloumn1]
+      ,[Coloumn2]      ,[Coloumn3]      ,[Coloumn4]      ,[Coloumn5]      ,[Coloumn6]      ,[Coloumn7]
+      ,[Coloumn8]      ,[Coloumn9]      ,[Coloumn10]      ,[Coloumn11]      ,[Coloumn12]      ,[Coloumn13]
+      ,[Coloumn14]      ,[Coloumn15]      ,[Coloumn16]      ,[Coloumn17]      ,[Coloumn18]      ,[Coloumn19]
+      ,[Coloumn20]      ,[Coloumn21]      ,[Coloumn22]      ,[Coloumn23]      ,[Coloumn24]
+      ,[Coloumn25]      ,[Coloumn26]      ,[Coloumn27]    ,[Coloumn28]      
+  FROM [Database].[dbo].[TableName]'
+ 
+   
+  declare @fn nvarchar(100)
+  set @fn= 'JourneyReport_'+ Convert(nvarchar(10),getdate(),105)+'_'+ Convert(nvarchar(10),getdate(),108)+'.xls'
+
+
+--print '-------------------------------------------'
+--print replace(replace(@body,'&lt;','<'),'&gt;','>')
+--set @body = replace(replace(@body,'&lt;','<'),'&gt;','>')
+EXEC msdb.dbo.sp_send_dbmail
+    @profile_name = '<MailConfigurationProfileName>',
+    @recipients = '', 
+  --@copy_recipients ='',
+	--@blind_copy_recipients = '',
+    @subject = @Sub,
+    @body = @body,
+    @body_format = 'html',
+	@query=@qry,
+    @attach_query_result_as_file = 1,
+	@query_attachment_filename =@fn,
+@query_result_separator='	',@query_result_width =32767,
+@query_result_no_padding=1;
+END
